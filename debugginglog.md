@@ -49,7 +49,7 @@ Actual (if not fixed):
 
 ### Error code and Description
 
-No error occurred, but I realised early that future bugs could appear if item name or price were invalid. 
+No error occurred during testing, but I identified a potential risk: future bugs could arise if item names or prices were invalid. 
 Since all menu items inherit from Item, I decided to add validation up front in the constructor.
 
 Expected:
@@ -65,3 +65,34 @@ Actual (if not fixed):
 - Raised `ValueError` on invalid inputs
 - Added getter methods for `__name` and `__price`
 - Confirmed class builds successfully and will enforce checks for all subclasses
+
+# Issue #3: Implemented Drink class with validation and base preparation logic
+
+**Status:** Resolved
+
+**File(s) Affected:** drink.py  
+**Commit (Noticed):** Update #2 - Implemented Item class logic (`c29bcb1`)
+**Commit (Resolved):** Update #3 - Updated drink.py (`9c93fc9`)
+
+### Error code and Description
+
+There was no specific error during implementation, but I needed to ensure that `Drink` correctly handled two key attributes: `size` and `cold`. 
+These are unique to drinks and required validation based on the UML and course requirements.
+
+Expected:
+- Ensure only valid `Size` enum values are accepted
+- Prevent invalid `cold` inputs (like strings or integers)
+- Make sure the `prepare()` method gives a clear, override-friendly message
+
+Actual (if not handled):
+- Invalid enum or boolean values could slip in and cause subtle bugs in subclasses
+- `prepare()` wouldn’t produce helpful output or be easily overridden
+
+### Resolution Log
+
+- Created the `Drink` class inheriting from `Item`
+- Added `__size` and `__cold` with validation in `__init__()`
+- Used `isinstance()` to enforce clean enum and bool types
+- Implemented `prepare()` with dynamic size and name formatting
+- Added getters `get_size()` and `is_cold()` to support subclass logic
+
