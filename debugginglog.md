@@ -1,28 +1,41 @@
-# Issue #1: Setting up project and UML-based class structure
+> **Acknowledgement**: This debugging journal’s structure was inspired by a format shared by Alexandra Berdashkevich, with permission from the teaching team.
 
-**Status:** Resolved
+# Issue #1: Creating scaffold for all classes based on UML
 
-**File(s) Affected:** menu_item.py, drink.py, food.py, tea.py, coffee.py, other.py, savoury.py, sweet.py, order.py, store.py, enums.py
+**Status: Resolved**
 
-**Commit (Noticed):** None – initial project setup  
-**Commit (Resolved):** 1. Created class file structure and abstract MenuItem base class
+**File(s) Affected:** item.py, drink.py, tea.py, coffee.py, other.py, food.py, savoury.py, sweet.py, order.py, store.py, enums.py, test_items.py  
+**Commit (Noticed):** _N/A – Initial setup phase_  
+**Commit (Resolved):** Update #1 - Created class file structure based on UML (`c20d1a1`)
 
 ### Error code and Description
 
-No errors occurred during this stage, but it was important to align the file layout and class naming with the UML diagram and Reid Honan's forum clarifications.
+There wasn’t an actual error thrown, but this step was essential to prevent future confusion. The entire café system’s class structure needed to reflect the UML and assessment brief from the beginning. This included ensuring:
+- File naming matched class roles
+- Relationships (like inheritance) were scaffolded correctly
+- `Cafe` (not in UML) was added to `store.py` as per brief and forum guidance
 
 Expected:
-- One `.py` file per class
-- Abstract base class created
-- Class names and responsibilities matching UML
+- One `.py` file per class and enum shown in the UML
+- COMP1048-compliant headers in all files
+- Classes defined with correct names and placeholder bodies
+- Structure ready for testing, logic, and Pytest setup
 
-Actual:
-- Confirmed that `Store.py` (as `Cafe`) is needed to meet brief, even though not shown in UML
+Actual (if not fixed):
+- Without this structure, logic could end up misplaced
+- Missing files or inconsistent naming would make the system harder to scale or test later
+- UML deviations (like Cafe) would go undocumented
 
 ### Resolution Log
 
-- Created one `.py` file for each class in the UML
-- Added required docstring header to each file
-- Declared abstract base class `MenuItem` using ABC module
-- Logged deviation: implemented `Cafe` class in `Store.py` for managing total earnings and order history
-- Committed structure setup as first Git commit
+- Created 12 total `.py` files based on UML and brief:
+  - Abstract/base classes: `item.py`, `drink.py`, `food.py`
+  - Subclasses: `tea.py`, `coffee.py`, `other.py`, `savoury.py`, `sweet.py`
+  - Management: `order.py`, `store.py`
+  - Supporting enums: `enums.py`
+  - Test starter: `test_items.py`
+- Inserted COMP1048-standard headers into each file
+- Declared class names and parent relationships (e.g. `Drink(Item)`)
+- Used `pass` or placeholder methods where needed
+- Added `Cafe` to `store.py` to handle order history and total earnings (brief requirement)
+- Confirmed structure with clean commit: `c20d1a1`
