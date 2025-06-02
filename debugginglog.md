@@ -39,3 +39,29 @@ Actual (if not fixed):
 - Used `pass` or placeholder methods where needed
 - Added `Cafe` to `store.py` to handle order history and total earnings (brief requirement)
 - Confirmed structure with clean commit: `c20d1a1`
+
+# Issue #2: Implemented Item constructor with validation
+
+**Status:** Resolved  
+**File(s) Affected:** item.py  
+**Commit (Noticed):** Update #1 - Created class file structure based on UML (`c20d1a1`)  
+**Commit (Resolved):** Update #2 - Implemented Item class logic (`c29bcb1`)
+
+### Error code and Description
+
+No error occurred, but I realised early that future bugs could appear if item name or price were invalid. 
+Since all menu items inherit from Item, I decided to add validation up front in the constructor.
+
+Expected:
+- Name should be a non-empty string
+- Price should be a non-negative float
+
+Actual (if not fixed):
+- Code could crash later or show incorrect prices if invalid data slipped through
+
+### Resolution Log
+
+- Added `__init__()` to `Item` with checks for valid name and price
+- Raised `ValueError` on invalid inputs
+- Added getter methods for `__name` and `__price`
+- Confirmed class builds successfully and will enforce checks for all subclasses
