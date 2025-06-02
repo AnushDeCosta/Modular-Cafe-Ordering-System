@@ -9,6 +9,7 @@ This is my own work as defined by the University's Academic Misconduct Policy.
 
 from abc import ABC, abstractmethod
 
+
 class Item(ABC):
     """
     Abstract base class representing a menu item in the café.
