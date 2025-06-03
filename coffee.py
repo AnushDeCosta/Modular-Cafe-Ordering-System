@@ -128,10 +128,10 @@ from enums import Bean
 class Coffee(Drink):
     """
     Represents a coffee drink sold in the café.
-    Inherits from the Drink class and includes sugar, extra shots, milk, and readiness.
+    Inherits from the Drink class and includes sugar, milk, and readiness.
     """
 
-    BASE_PRICE = 3
+    BASE_PRICE = 3.00
 
     def __init__(self, size, cold, beans, sugar, milk=False, ready=False):
         """
@@ -144,7 +144,7 @@ class Coffee(Drink):
         :param milk: add milk (default False)
         :param ready: already brewed? (default False)
         """
-        super().__init__("Coffee", 0.0, size, cold)
+        super().__init__("Coffee", 0.00, size, cold)
 
         if not isinstance(beans, list) or len(beans) != 1 or not isinstance(beans[0], Bean):
             raise ValueError("beans must be a list containing exactly one Bean enum")
@@ -223,5 +223,6 @@ class Coffee(Drink):
             sugar_text = f"{self.__sugar} sugar" if self.__sugar == 1 else f"{self.__sugar} sugars"
             extras.append(sugar_text)
 
-        return f"{size_text} {temp_text} coffee with {', '.join(extras)}"
+        return f"{size_text} {temp_text} coffee with {', '.join(extras)} at price - ${self.calculate_price():.2f}"
+
 

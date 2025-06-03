@@ -7,8 +7,76 @@ Username: deyay064
 This is my own work as defined by the University's Academic Misconduct Policy.
 """
 
-
 from drink import Drink
+from enums import Flavour
+
 
 class Other(Drink):
-    pass
+    """
+    Represents any 'Other' drink sold in the café.
+    Inherits from the Drink class. and includes Soda boolean.
+    """
+
+    BASE_PRICE = 5.00
+
+    def __init__(self, size, cold, flavour, soda=False):
+        """
+
+        :param size:
+        :param cold:
+        :param flavour:
+        :param soda:
+        """
+        super().__init__("Other", 0.00, size, cold)
+
+        if not isinstance(flavour, list) or len(flavour) != 1 or not isinstance(flavour[0], Flavour):
+            raise ValueError("Flavour must be a list containing exactly one flavour enum")
+
+        self.__flavour = flavour
+        self.__soda = soda
+
+    def calculate_price(self):
+        """
+        Calculates the total price of the drink based on flavor.
+
+        :return: Float – final price (clamped to 0 if negative)
+        """
+        soda_price = 0.50 if self.__soda else 0.00
+        cold_price = 1.00 if self.is_cold() else 0.00
+        flavour_price = 0.00
+        flavour = self.__flavour[0]
+        if flavour == Flavour.WATER:
+            flavour_price -= 3
+        elif flavour == Flavour.LEMONADE:
+            flavour_price += 2
+        elif flavour == Flavour.COLA:
+            flavour_price += 2
+
+        price = (self.BASE_PRICE + soda_price + cold_price + flavour_price)
+        return max(price, 0.00)
+
+    def get_flavour(self):
+        """
+        Returns the selected Flavour enum used in this drink.
+
+        :return: Flavour
+        """
+        return self.__flavour[0]
+
+    def __str__(self):
+        """
+        Returns a readable string representing the drink's description.
+
+        :return: str
+        """
+        size_text = self.get_size().value
+        temp_text = "iced" if self.is_cold() else "hot"
+        flavour_text = self.__flavour[0].value
+        extras = []
+
+        if self.__soda:
+            extras.append("with soda")
+        else:
+            extras.append("still")
+
+        return f"{size_text} {temp_text} {flavour_text} ({', '.join(extras)}) at price - ${self.calculate_price():.2f}"

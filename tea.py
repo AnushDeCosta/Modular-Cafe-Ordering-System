@@ -16,7 +16,7 @@ class Tea(Drink):
     Inherits from the Drink class and includes flavours, milk, sugar, and readiness.
     """
 
-    BASE_PRICE = 2
+    BASE_PRICE = 2.00
 
     def __init__(self, size, cold, flavours, sugar, milk=False, ready=False):
         """
@@ -29,7 +29,7 @@ class Tea(Drink):
         :param milk: add milk (default False)
         :param ready: already brewed? (default False)
         """
-        super().__init__("Tea", 0.0, size, cold)
+        super().__init__("Tea", 0.00, size, cold)
 
         if not isinstance(flavours, list) or \
                 not all(isinstance(flavour, TeaFlavour) for flavour in flavours):
@@ -113,7 +113,7 @@ class Tea(Drink):
                 flavour_price += 2
 
         price = (self.BASE_PRICE + milk_price + sugar_price + flavour_price)
-        return max(price, 0.0)
+        return max(price, 0.00)
 
     def get_flavours(self):
         """
@@ -155,4 +155,6 @@ class Tea(Drink):
             sugar_text = f"{self.__sugar} sugar" if self.__sugar == 1 else f"{self.__sugar} sugars"
             extras.append(sugar_text)
 
-        return f"{size_text} {temp_text} tea with {', '.join(extras)}"
+        return f"{size_text} {temp_text} tea with {', '.join(extras)} at price - ${self.calculate_price():.2f}"
+
+
