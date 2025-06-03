@@ -40,7 +40,18 @@ class Item(ABC):
         pass
 
     def get_name(self):
+        """
+        Returns the name of the item.
+
+        :return: The name of the item as a string.
+        """
         return self.__name
 
     def get_price(self):
+        """
+        Returns the base price of the item.
+
+        :return: The price of the item as a float.
+        """
         return self.__price
+

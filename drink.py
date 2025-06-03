@@ -9,6 +9,7 @@ This is my own work as defined by the University's Academic Misconduct Policy.
 
 from item import Item
 from enums import Size
+from abc import abstractmethod
 
 
 class Drink(Item):
@@ -17,14 +18,14 @@ class Drink(Item):
     Adds size, cold attributes and a prepare() method.
     """
 
-    def __init__(self, name, price, size, cold=True):
+    def __init__(self, name, price, size, cold=False):
         """
         Initialise a Drink item with size and temperature.
 
         :param name: Name of the drink (inherited from Item)
         :param price: Base price of the drink
         :param size: A value from the Size enum
-        :param cold: Boolean indicating if the drink is cold (default: True)
+        :param cold: Boolean indicating if the drink is cold (default: False)
         :raises ValueError: if size or cold are invalid types
         """
         super().__init__(name, price)
@@ -55,3 +56,11 @@ class Drink(Item):
         Can be overridden by subclasses.
         """
         print(f"Preparing your {self.get_size().value} {self.get_name()}...")
+
+    @abstractmethod
+    def calculate_price(self):
+        """
+        Abstract method to calculate the total price of the drink.
+        Must be implemented by subclasses (e.g., Tea, Coffee, Other).
+        """
+        pass
