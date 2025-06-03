@@ -221,3 +221,26 @@ The Tea class needed a complete implementation:
 - The usefulness of testing flavour and soda combinations to confirm dynamic pricing
 - Why test logic should be separated from implementation files to avoid duplicate output
 
+# Issue #8: Implemented Food base class with size and order logic
+
+**Status:** Resolved  
+**File(s) Affected:** food.py  
+**Commit (Noticed):** N/A – New class implementation  
+**Commit (Resolved):** Update #9 – Implemented base Food class in food.py (`b954b06`)
+
+### Description and Rationale
+
+- Created `Food` as an abstract base class inheriting from `Item`, based on the UML design.
+- Added a private `__size` attribute, validated against the `Size` enum.
+- Implemented `get_size()` getter for use in subclasses (`Savoury`, `Sweet`).
+- Defined `order()` method to be overridden in child classes, but provided default user-friendly output for testing.
+- Declared `calculate_price()` as an `@abstractmethod`, ensuring that all subclasses implement their own pricing logic.
+
+### What I Learned
+
+- The role of base classes in simplifying shared logic across subclasses
+- Why abstract methods are useful for enforcing consistent subclass responsibilities
+- That even minimal classes should validate early (e.g. checking enum types)
+
+
+
