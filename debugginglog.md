@@ -167,3 +167,29 @@ The Tea class needed a complete implementation:
 - The importance of clamping price and checking enums in lists
 - That docstring consistency across methods improves readability and compliance
 
+# Issue #6: Implemented Coffee class with bean validation, pricing, and __str__ output
+
+**Status:** Resolved  
+**File(s) Affected:** coffee.py  
+**Commit (Noticed):** N/A – New class implementation 
+**Commit (Resolved):** Update #6 – Updated coffee.py (`a25c292`)
+
+### Description and Rationale
+
+- Implemented `Coffee` class as a subclass of `Drink`, with attributes: `beans`, `milk`, `sugar`, and `ready`.
+- Although the UML specifies `beans: bean[]`, no `add_bean()` or `remove_bean()` methods were included — unlike `Tea`, which allows customisation.
+- Decided to enforce selection of **exactly one bean** during initialisation, as this:
+  1. Keeps the coffee creation model simple and realistic (cafés typically use a single roast/blend per cup)
+  2. Avoids unnecessary complexity around balancing multiple beans types (in reality).
+- Used a list structure to comply with the UML, but validated it contains only one `Bean` enum.
+- Implemented `brew()` to reflect preparation state and notify if already brewed.
+- Used `calculate_price()` to apply per-bean price modifiers and clamp the final result to $0 minimum.
+- Overrode `__str__()` to provide clear description output with size, temperature, bean, milk, and sugar.
+- Added a `get_bean()` method to expose the bean for use in other classes (e.g. order summary or testing).
+
+### What I Learned
+
+- That UML design allows for interpretation based on structure and context — especially when dynamic methods are missing
+- How to balance real-world customer logic (one bean per coffee) with assignment requirements (bean[])
+- How to validate list content and structure clearly with defensive programming
+- Reusing logic patterns across subclasses while tailoring design for specific item behaviour (e.g. Coffee ≠ Tea)
