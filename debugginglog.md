@@ -136,3 +136,34 @@ Actual (if not fixed):
 - That UML design overrides real-world intuition in assignments
 - How to structure price logic with edge case protections
 - The importance of defensive programming and clean error messages
+
+# Issue #5: Finalised Tea class with __str__, price logic, and full validation
+
+**Status:** Resolved  
+**File(s) Affected:** tea.py 
+**Commit (Noticed):** Update #4 - Updated tea.py, item.py and drink.py (`7e40952`)
+**Commit (Resolved):** Update #5 – Finalised tea.py (`858ae3b`)
+
+### Problem
+
+The Tea class needed a complete implementation:
+- The UML required handling of multiple flavours, milk, sugar, and readiness.
+- Printing was embedded across methods; needed to switch to __str__ for clean output.
+- Pricing logic had to include both additive and negative values (e.g., Earl Grey -$3).
+- Missing return in calculate_price() and improper constants usage (hardcoded `2`).
+
+### Fix Summary
+
+- Added class constant `BASE_PRICE = 2` for clarity and reusability
+- Updated `calculate_price()` to include all pricing rules and use `max(..., 0.0)`
+- Rewrote `__str__()` to return dynamic, realistic café-style descriptions
+- Used `self` in `brew()` print output for consistency and clarity
+- Kept user-relevant print statements for add/remove flavour methods
+- Confirmed that `get_flavours()` and `is_ready()` work as expected for testing
+
+### What I Learned
+
+- How to use `__str__` to replace print-based outputs for cleaner testing
+- The importance of clamping price and checking enums in lists
+- That docstring consistency across methods improves readability and compliance
+
