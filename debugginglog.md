@@ -96,3 +96,43 @@ Actual (if not handled):
 - Implemented `prepare()` with dynamic size and name formatting
 - Added getters `get_size()` and `is_cold()` to support subclass logic
 
+# Issue #4: Implemented Tea class with full logic and pricing
+
+**Status:** Resolved
+
+**File(s) Affected:** tea.py, drink.py, item.py  
+**Commit (Noticed):** N/A – New class implementation  
+**Commit (Resolved):** Update #4 - Updated tea.py, item.py and drink.py (`7e40952`)
+
+### Error code and Description
+
+No specific error occurred, but the implementation involved interpreting a number of design decisions from the UML. In particular:
+- The UML listed `flavours: teaFlavour[]`, which in real life wouldn't make sense to allow multiple, but had to be implemented as a list to follow the diagram.
+- Care was needed to validate inputs (milk, sugar, ready, flavours) without breaking constructor logic.
+- Price calculation involved both additive and subtractive adjustments and had to be clamped to $0.
+
+Expected:
+- Tea class should correctly inherit from Drink and match the UML attributes and methods
+- All pricing logic for flavours (including Earl Grey's -$3) handled safely
+- Methods like `brew()`, `add_flavour()` and `remove_flavour()` should handle edge cases (e.g., duplicates)
+
+Actual (if not fixed):
+- Multiple flavours could break display logic or cause pricing errors
+- Users could add duplicates or remove non-existent flavours
+- Price could drop below 0 without clamping
+
+### Resolution Log
+
+- Implemented `__init__()` with full validation for all attributes
+- Wrote `brew()` method with size, temperature and joined flavour output
+- Added `add_flavour()` and `remove_flavour()` with enum type checks and duplication handling
+- Implemented `calculate_price()` with per-flavour adjustments and clamping at $0.00
+- Created getters `get_flavours()` and `is_ready()` for private attribute access
+- All docstrings were rewritten to match COMP1048 standards
+
+### What I Learned
+
+- How to work with enums in a list, and extract their `.value` strings for printing
+- That UML design overrides real-world intuition in assignments
+- How to structure price logic with edge case protections
+- The importance of defensive programming and clean error messages
