@@ -16,6 +16,8 @@ class Tea(Drink):
     Inherits from the Drink class and includes flavours, milk, sugar, and readiness.
     """
 
+    BASE_PRICE = 2
+
     def __init__(self, size, cold, flavours, sugar, milk=False, ready=False):
         """
         Initialise a Tea drink object.
@@ -49,16 +51,11 @@ class Tea(Drink):
         Brew the tea and mark it as ready.
         If already brewed, prints a message and does nothing.
         """
-        size_text = self.get_size().value
-        temp_text = "iced" if self.is_cold() else "hot"
-        flavour_names = [flavour.value for flavour in self.__flavours]
-        flavour_text = " & ".join(flavour_names) if flavour_names else "Plain"
-
         if self.__ready:
             print("Tea is already brewed!")
             return
 
-        print(f"Brewing your {size_text} {temp_text} {flavour_text} tea… Done!")
+        print(f"Brewing your {self}… Done!")
         self.__ready = True
 
     def add_flavour(self, flavour):
@@ -101,8 +98,7 @@ class Tea(Drink):
 
         :return: Float – final price (clamped to 0 if negative)
         """
-        base_tea = 2
-        milk_price = 0.75 if self.__milk is True else 0.00
+        milk_price = 0.75 if self.__milk else 0.00
         sugar_price = 0.25 * self.__sugar
 
         flavour_price = 0.00
@@ -116,11 +112,8 @@ class Tea(Drink):
             elif flavour == TeaFlavour.CHAMOMILE:
                 flavour_price += 2
 
-        price = (base_tea + milk_price + sugar_price + flavour_price)
-        if price < 0:
-            price = 0.0
-
-        print(f"Your total is {price} for your tea.")
+        price = (self.BASE_PRICE + milk_price + sugar_price + flavour_price)
+        return max(price, 0.0)
 
     def get_flavours(self):
         """
@@ -137,3 +130,29 @@ class Tea(Drink):
         :return: Boolean
         """
         return self.__ready
+
+    def __str__(self):
+        """
+        Returns a readable string representing the tea's description.
+
+        :return: str
+        """
+        size_text = self.get_size().value
+        temp_text = "iced" if self.is_cold() else "hot"
+        flavour_names = [flavour.value for flavour in self.__flavours]
+        flavour_text = " & ".join(flavour_names)
+        extras = []
+
+        if flavour_text:
+            extras.append(flavour_text)
+
+        if self.__milk:
+            extras.append("milk")
+        else:
+            extras.append("no milk")
+
+        if self.__sugar > 0:
+            sugar_text = f"{self.__sugar} sugar" if self.__sugar == 1 else f"{self.__sugar} sugars"
+            extras.append(sugar_text)
+
+        return f"{size_text} {temp_text} tea with {', '.join(extras)}"
