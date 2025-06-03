@@ -193,3 +193,31 @@ The Tea class needed a complete implementation:
 - How to balance real-world customer logic (one bean per coffee) with assignment requirements (bean[])
 - How to validate list content and structure clearly with defensive programming
 - Reusing logic patterns across subclasses while tailoring design for specific item behaviour (e.g. Coffee ≠ Tea)
+
+# Issue #7: Implemented Other class with soda, flavour, and cold modifiers
+
+**Status:** Resolved  
+**File(s) Affected:** other.py, tea.py, coffee.py  
+**Commit (Noticed):** N/A – New class implementation  
+**Commit (Resolved):** Update #7 – Implemented other.py and updated tea.py, coffee.py (`3b71670`)
+
+### Description and Rationale
+
+- Created the `Other` class based on UML and brief, representing fizzy/cold drinks like Water, Cola, and Lemonade.
+- Added constructor validation to ensure the flavour is a list containing exactly one `Flavour` enum.
+- Implemented `calculate_price()` using:
+  - `BASE_PRICE = $5.00`
+  - `+0.50` if soda is True
+  - `+1.00` if cold
+  - flavour modifiers: Water `-3`, Cola/Lemonade `+2`
+- Used `max(price, 0.00)` to avoid negative prices.
+- Overrode `__str__()` to match café-style output: `Medium iced Cola (with soda) at price - $8.50`
+- Updated `__str__()` in `tea.py` and `coffee.py` to include the formatted price for consistency.
+
+### What I Learned
+
+- How to reuse design patterns from existing subclasses while adapting to new logic (e.g. Other ≠ Tea/Coffee)
+- The importance of consistent user output across multiple classes
+- The usefulness of testing flavour and soda combinations to confirm dynamic pricing
+- Why test logic should be separated from implementation files to avoid duplicate output
+
