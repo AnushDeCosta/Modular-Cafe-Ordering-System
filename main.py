@@ -83,14 +83,14 @@ def main():
     order.add_item_to_order(savoury)
 
     print("\nOrder details:")
-    print(order)
-    print(f"Total (via get_total_price): ${order.get_total_price():.2f}")
+    print(order) # Uses __str__ output
+    print(f"Total (via get_total_price): ${order.get_total_price():.2f}")  # Validating method return
 
     print("\nRemoving sweet item from the order...")
     order.remove_item_from_order(sweet)
     print("Updated order after removal:")
-    print(order)
-    print(f"Total (via get_total_price): ${order.get_total_price():.2f}")
+    print(order) # Uses __str__ output
+    print(f"Total (via get_total_price): ${order.get_total_price():.2f}")  # Validating method return
 
     # Brew tea and coffee
     print("\nBrewing drinks...")
@@ -98,8 +98,8 @@ def main():
     coffee.brew()
 
     print("\nUpdated order details after brewing:")
-    print(order)
-    print(f"Total (via get_total_price): ${order.get_total_price():.2f}")
+    print(order) # Uses __str__ output
+    print(f"Total (via get_total_price): ${order.get_total_price():.2f}")  # Validating method return
 
     print(f"Coffee has milk? {coffee.has_milk()}")
     print(f"Tea sugar: {tea.get_sugar()}")
