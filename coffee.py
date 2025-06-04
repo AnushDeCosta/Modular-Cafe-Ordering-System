@@ -89,6 +89,15 @@ class Coffee(Drink):
         """
         return self.__beans[0]
 
+    def get_ready(self):
+        """
+        Returns the readiness state of the coffee (i.e., whether it has been brewed).
+
+        :return: True if brewed, False otherwise
+        :rtype: bool
+        """
+        return self.__ready
+
     def __str__(self):
         """
         Returns a readable string describing the coffee, including size, temperature,
