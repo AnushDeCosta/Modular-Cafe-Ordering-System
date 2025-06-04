@@ -314,3 +314,27 @@ The Tea class needed a complete implementation:
 - How to avoid recalculating order totals by updating cost incrementally
 - Why `__str__()` improves both debugging and test output in OOP systems
 - The value of exposing internal state via `get_` methods while preserving encapsulation
+
+# Issue #12: Implemented Cafe class to manage orders and earnings
+
+**Status:** Resolved  
+**File(s) Affected:** store.py  
+**Commit (Noticed):** N/A – New class implementation  
+**Commit (Resolved):** Update #13 – Implemented Cafe class in store.py (`6c48711`)
+
+### Description and Rationale
+
+- Implemented the `Cafe` class based on the UML and functional requirements from the brief.
+- Added private attributes `__earnings` (float) and `__order_history` (list of Orders).
+- `create_order()` both instantiates and records each new order in the history list, ensuring the brief’s requirement is met without violating UML restrictions.
+- `report_profit()` recalculates total earnings dynamically by summing the price of all recorded orders.
+- Implemented `__str__()` to generate a readable café summary, showing all orders and the current profit.
+- Included a safe getter `get_order_history()` for test access, allowed under COMP1048 standards.
+
+### What I Learned
+
+- How to balance UML compliance with assignment brief requirements by using controlled internal logic
+- Why `create_order()` is the best place to record orders without introducing unauthorised methods
+- The usefulness of `__str__()` for summarising multi-object systems like a café with many orders
+- How to avoid side-effect bugs by recalculating profit from history instead of storing duplicate state
+
