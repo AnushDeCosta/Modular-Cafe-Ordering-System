@@ -10,6 +10,7 @@ This is my own work as defined by the University's Academic Misconduct Policy.
 from food import Food
 from enums import Flour, Type
 
+
 class Savoury(Food):
     """
     Represents a savoury food item sold in the café.
@@ -19,7 +20,7 @@ class Savoury(Food):
 
     def __init__(self, size, type, flour):
         """
-        Initialise a Savoury food  object.
+        Initialise a Savoury food object.
 
         :param size: Size enum (SMALL / MEDIUM / LARGE)
         :param type: Type enum (LOAF / MUFFIN / SLICE)
