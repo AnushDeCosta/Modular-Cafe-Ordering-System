@@ -266,4 +266,29 @@ The Tea class needed a complete implementation:
 - How to make output both machine-readable and user-friendly using `__str__`
 - Importance of separating business logic (price) from display logic
 
+# Issue #10: Implemented Sweet class with type-based pricing logic
+
+**Status:** Resolved  
+**File(s) Affected:** sweet.py  
+**Commit (Noticed):** N/A – New class implementation  
+**Commit (Resolved):** Update #11 – Implemented Sweet class in sweet.py (`c9b75fc`)
+
+### Description and Rationale
+
+- Created the `Sweet` class inheriting from `Food`, as outlined in the UML.
+- Validated input for `Type` enum and rejected non-enum values.
+- Used a type multiplier to calculate final price based on:
+  - Loaf ×3
+  - Muffin ×1
+  - Slice ×0.5
+- Used `round(price, 2)` to ensure pricing is formatted for currency.
+- Implemented `__str__()` to return descriptive output for orders/receipts.
+- All functionality confirmed via tests in `test_items.py`.
+
+### What I Learned
+
+- How to simplify subclass logic by leveraging reusable base classes
+- Why input validation at the constructor stage prevents bugs later
+- How to apply and format dynamic pricing cleanly for food categories
+- Importance of separating test logic from class files for clarity
 
