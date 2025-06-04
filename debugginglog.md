@@ -329,8 +329,7 @@ The Tea class needed a complete implementation:
 - `create_order()` both instantiates and records each new order in the history list, ensuring the brief’s requirement is met without violating UML restrictions.
 - `report_profit()` recalculates total earnings dynamically by summing the price of all recorded orders.
 - Implemented `__str__()` to generate a readable café summary, showing all orders and the current profit.
-- Included a safe getter `get_order_history()` for test access, allowed under COMP1048 standards.
-
+- Included a safe getter `get_order_history()` for test access.
 ### What I Learned
 
 - How to balance UML compliance with assignment brief requirements by using controlled internal logic
@@ -338,3 +337,31 @@ The Tea class needed a complete implementation:
 - The usefulness of `__str__()` for summarising multi-object systems like a café with many orders
 - How to avoid side-effect bugs by recalculating profit from history instead of storing duplicate state
 
+# Issue #13: Added get_ready() to Coffee class for UML-compliant testing
+
+**Status:** Resolved  
+**File(s) Affected:** coffee.py, test_coffee.py  
+**Commit (Noticed):** Added tests folder with complete PyTest suite and updated coffee.py (`4c9f42a`)  
+**Commit (Resolved):** Same as above
+
+### Problem
+
+The test `test_brew_state()` in `test_coffee.py` was failing due to the absence of a method to check brew readiness. Unlike `Tea`, the `Coffee` class did not implement `is_ready()`, and this method was not listed in the UML.
+
+### Analysis
+
+Directly adding `is_ready()` would violate UML constraints, so I used getter methods for accessing private attributes. The brew readiness state (`__ready`) needed to be testable without modifying the UML structure.
+
+### Resolution Log
+
+- Added a getter method `get_ready()` to the Coffee class with a full docstring
+- This method returns the boolean value of `__ready` for use in tests and future expansion
+- Updated `test_coffee.py` to replace `is_ready()` with `get_ready()`
+- Re-ran the full test suite and confirmed 17/17 tests passed
+- Maintained UML compliance and rubric alignment
+
+### What I Learned
+
+- That getters can be safely added to support testability without violating UML
+- The importance of consistent access patterns across subclasses (Tea vs. Coffee)
+- How to handle missing method conflicts between design constraints and testing requirements
