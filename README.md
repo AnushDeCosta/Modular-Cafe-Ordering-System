@@ -11,7 +11,7 @@ This assessment models a café environment that supports customisable drink and 
 - **Abstraction & Inheritance**: Base classes like `Item`, `Drink`, and `Food` are extended by specialised classes such as `Tea`, `Coffee`, `Sweet`, and `Savoury`.
 - **Composition & Aggregation**: The `Cafe` class handles orders and manages internal state, delegating behaviour to items.
 - **Encapsulation**: Private attributes and setter/getter methods enforce data integrity.
-- **Test-Driven Development**: Pytest is used to validate core logic, edge cases, and price calculations.
+- **Test-Driven Development**: Pytest is used to validate core logic, edge cases, helper methods, and price calculations.
 
 > **Note:** The implementation adheres closely to the provided UML and programming standards.
 
