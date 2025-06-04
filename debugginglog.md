@@ -242,5 +242,28 @@ The Tea class needed a complete implementation:
 - Why abstract methods are useful for enforcing consistent subclass responsibilities
 - That even minimal classes should validate early (e.g. checking enum types)
 
+# Issue #9: Implemented Savoury class with type/flour pricing logic
+
+**Status:** Resolved  
+**File(s) Affected:** savoury.py  
+**Commit (Noticed):** N/A – New class implementation  
+**Commit (Resolved):** Update #10 – Implemented Savoury class in savoury.py (`5a7632f`)
+
+### Description and Rationale
+
+- Implemented the `Savoury` subclass of `Food`, with `Type` and `Flour` enums as per UML.
+- Validated that both inputs were single enum values and stored them as private attributes.
+- Used `if/elif` logic in `calculate_price()` to apply multipliers:
+  - Type: Loaf ×3, Muffin ×1, Slice ×0.5
+  - Flour: Whole ×2, White ×1
+- Ensured final price is calculated as `BASE_PRICE × type × flour`, with `round()` for currency precision.
+- Added `__str__()` for realistic output like `"Savoury Small Loaf made with Whole flour at price - $12.00"`.
+
+### What I Learned
+
+- That enforcing enum validation early prevents bugs in price logic
+- How to apply nested pricing models (multiplicative instead of additive)
+- How to make output both machine-readable and user-friendly using `__str__`
+- Importance of separating business logic (price) from display logic
 
 
