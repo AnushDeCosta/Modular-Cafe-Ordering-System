@@ -21,6 +21,7 @@ This assessment models a café environment that supports customisable drink and 
 - **Item Pricing**: All price logic follows the assignment's guidelines, with multipliers based on attributes.
 - **Error Handling**: Input validation ensures users cannot create invalid or contradictory orders.
 - **Debugging Log**: All issues, resolutions, and test cases are documented in `debugginglog.md`.
+- **Helper Methods**: Added methods like `has_milk()`, `get_sugar()`, `get_total_price()`, and `get_earn_
 
 ## Core Mechanics
 - **Item**: Abstract class for all products, with enforced implementation of `get_price()` and `__str__()`.
