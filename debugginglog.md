@@ -292,3 +292,25 @@ The Tea class needed a complete implementation:
 - How to apply and format dynamic pricing cleanly for food categories
 - Importance of separating test logic from class files for clarity
 
+# Issue #11: Implemented Order class with item management and cost tracking
+
+**Status:** Resolved  
+**File(s) Affected:** order.py  
+**Commit (Noticed):** N/A – New class implementation  
+**Commit (Resolved):** Update #12 – Updated order.py (`ea5f816`)
+
+### Description and Rationale
+
+- Implemented the `Order` class to manage customer purchases, based on the UML.
+- Created private attributes `__items` (list) and `__cost` (float) to store state as items are added and removed.
+- Used `add_item_to_order()` and `remove_item_from_order()` methods to manage contents and cost in real time.
+- Implemented `calculate_price()` to return the current `__cost` without recalculating from scratch.
+- Added `get_items()` to support test visibility without exposing internal state directly.
+- Implemented `__str__()` for friendly receipt-style output, supporting `main.py` and `test_items.py`.
+
+### What I Learned
+
+- The importance of syncing UML fields (like `- cost`) even if they're derivable
+- How to avoid recalculating order totals by updating cost incrementally
+- Why `__str__()` improves both debugging and test output in OOP systems
+- The value of exposing internal state via `get_` methods while preserving encapsulation
