@@ -365,3 +365,37 @@ Directly adding `is_ready()` would violate UML constraints, so I used getter met
 - That getters can be safely added to support testability without violating UML
 - The importance of consistent access patterns across subclasses (Tea vs. Coffee)
 - How to handle missing method conflicts between design constraints and testing requirements
+
+# Issue #14: Added helper methods for inspection and testing support
+
+**Status:** Resolved  
+**File(s) Affected:** order.py, store.py, tea.py, coffee.py, other.py, sweet.py, savoury.py, main.py, test_*.py  
+**Commit (Noticed):** N/A – Design friction during testing and printing  
+**Commit (Resolved):** Update #14 – Added helper methods for inspection and testing across item classes (`41c4677`)
+
+### Problem
+
+While implementing `main.py` and PyTest coverage, it became clear that some internal attributes were difficult to inspect or verify cleanly. Specifically:
+- Attributes like `__milk`, `__sugar`, `__soda` were private
+- Prices could only be accessed via `calculate_price()`, causing inconsistent method usage
+- Café earnings required calling `report_profit()` repeatedly
+These limitations made both the test suite and main script harder to maintain.
+
+### Resolution Log
+
+- Added read-only getter methods to safely expose key private values for testing and summaries
+  - `has_milk()` and `get_sugar()` in `tea.py` and `coffee.py`
+  - `has_soda()` in `other.py`
+  - `get_price()` in `sweet.py` and `savoury.py`
+  - `get_total_price()` in `order.py` (alias of `calculate_price()`)
+  - `get_earnings()` in `store.py`
+- Updated `main.py` to print values using the new helper methods for clarity
+- Added 7 new test cases across the `test_*.py` files to validate each helper method
+- All 24 tests passed after integration
+
+### What I Learned
+
+- That getters can greatly improve testability without violating encapsulation or UML rules
+- How consistency in method naming (e.g. `get_price()` vs `calculate_price()`) improves readability
+- Why safe inspection methods are critical for confirming system behaviour during integration
+
