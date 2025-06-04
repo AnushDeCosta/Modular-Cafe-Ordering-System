@@ -26,3 +26,6 @@ def test_order_remove_item(simple_order):
     item = simple_order.get_items()[0]
     simple_order.remove_item_from_order(item)
     assert simple_order.calculate_price() == 0.0
+
+def test_get_total_price(simple_order):
+    assert simple_order.get_total_price() == simple_order.calculate_price()

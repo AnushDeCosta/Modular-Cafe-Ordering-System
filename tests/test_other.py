@@ -17,3 +17,6 @@ def test_price_with_soda_and_cold(sample_other):
 def test_invalid_flavour_type():
     with pytest.raises(ValueError):
         Other(Size.SMALL, True, [123], soda=False)
+
+def test_has_soda(sample_other):
+    assert sample_other.has_soda() is True

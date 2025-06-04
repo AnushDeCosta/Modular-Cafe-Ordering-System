@@ -67,6 +67,15 @@ class Order:
         """
         return list(self.__items)
 
+    def get_total_price(self):
+        """
+        Returns the total price of the order.
+        Alias for calculate_price(), added for semantic clarity in usage.
+
+        :return: float – total price of the order
+        """
+        return self.calculate_price()
+
     def __str__(self):
         """
         Returns a readable summary of the order, listing each item and the total price.

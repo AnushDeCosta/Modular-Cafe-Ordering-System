@@ -24,3 +24,7 @@ def test_brew_state(sample_coffee):
     sample_coffee.brew()
     assert sample_coffee.get_ready()
 
+def test_get_sugar_and_milk(sample_coffee):
+    assert sample_coffee.get_sugar() == 0
+    assert not sample_coffee.has_milk()
+

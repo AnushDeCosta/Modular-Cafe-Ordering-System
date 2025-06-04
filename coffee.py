@@ -98,6 +98,22 @@ class Coffee(Drink):
         """
         return self.__ready
 
+    def has_milk(self):
+        """
+        Returns True if milk is included in the drink.
+
+        :return: bool – whether the drink contains milk
+        """
+        return self.__milk
+
+    def get_sugar(self):
+        """
+        Returns the number of sugar units in the drink.
+
+        :return: int – sugar quantity (≥ 0)
+        """
+        return self.__sugar
+
     def __str__(self):
         """
         Returns a readable string describing the coffee, including size, temperature,

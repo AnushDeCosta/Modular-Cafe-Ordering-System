@@ -19,7 +19,7 @@ from store import Cafe
 
 
 def main():
-    print("==== Welcome to Campus Café System ====\n")
+    print("\n==== Welcome to Campus Café System ====\n")
 
     # Create a new store
     cafe = Cafe()
@@ -84,11 +84,13 @@ def main():
 
     print("\nOrder details:")
     print(order)
+    print(f"Total (via get_total_price): ${order.get_total_price():.2f}")
 
     print("\nRemoving sweet item from the order...")
     order.remove_item_from_order(sweet)
     print("Updated order after removal:")
     print(order)
+    print(f"Total (via get_total_price): ${order.get_total_price():.2f}")
 
     # Brew tea and coffee
     print("\nBrewing drinks...")
@@ -97,6 +99,11 @@ def main():
 
     print("\nUpdated order details after brewing:")
     print(order)
+    print(f"Total (via get_total_price): ${order.get_total_price():.2f}")
+
+    print(f"Coffee has milk? {coffee.has_milk()}")
+    print(f"Tea sugar: {tea.get_sugar()}")
+    print(f"Other includes soda? {other.has_soda()}")
 
     # === Submit order to store ===
     print("\nSubmitting order to the store...")
@@ -105,7 +112,8 @@ def main():
         cafe_order.add_item_to_order(item)
 
     print("\nStore summary:")
-    print(f"Total earnings: ${cafe.report_profit():.2f}")
+    cafe.report_profit()
+    print(f"Total earnings (read from state): ${cafe.get_earnings():.2f}")
     print(f"Number of orders: {len(cafe.get_order_history())}")
 
     print("\n==== Test Complete ====")

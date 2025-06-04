@@ -29,3 +29,7 @@ def test_add_remove_flavour(sample_tea):
 def test_invalid_flavour_type():
     with pytest.raises(ValueError):
         Tea(Size.SMALL, False, ["string not enum"], sugar=1)
+
+def test_get_sugar_and_milk(sample_tea):
+    assert sample_tea.get_sugar() == 1
+    assert sample_tea.has_milk() is True

@@ -77,6 +77,15 @@ class Savoury(Food):
         """
         return self.__flour
 
+    def get_price(self):
+        """
+        Returns the total calculated price of the food item.
+        This delegates to calculate_price() for consistency.
+
+        :return: float – final price of the item
+        """
+        return self.calculate_price()
+
     def __str__(self):
         """
         Returns a readable string describing the Savoury item, including type,

@@ -21,11 +21,13 @@ class Other(Drink):
 
     def __init__(self, size, cold, flavour, soda=False):
         """
+        Initialise an 'Other' drink item with size, temperature, flavour, and soda option.
 
-        :param size:
-        :param cold:
-        :param flavour:
-        :param soda:
+        :param size: Size enum (SMALL / MEDIUM / LARGE)
+        :param cold: Boolean – True if the drink is cold (iced), False if hot
+        :param flavour: List containing exactly one Flavour enum
+        :param soda: Boolean – True if soda is included (default is False)
+        :raises ValueError: if flavour is not a list of exactly one valid Flavour enum
         """
         super().__init__("Other", 0.00, size, cold)
 
@@ -62,6 +64,14 @@ class Other(Drink):
         :return: Flavour
         """
         return self.__flavour[0]
+
+    def has_soda(self):
+        """
+        Returns True if the drink includes soda.
+
+        :return: bool – whether soda is added
+        """
+        return self.__soda
 
     def __str__(self):
         """

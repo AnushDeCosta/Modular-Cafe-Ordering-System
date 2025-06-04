@@ -17,3 +17,6 @@ def test_price_for_slice(sample_sweet):
 def test_invalid_type():
     with pytest.raises(ValueError):
         Sweet(Size.SMALL, "cake")
+
+def test_get_price_matches_calculate_price(sample_sweet):
+    assert sample_sweet.get_price() == sample_sweet.calculate_price()

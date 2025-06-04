@@ -17,3 +17,6 @@ def test_price_logic(sample_savoury):
 def test_invalid_flour_type():
     with pytest.raises(ValueError):
         Savoury(Size.SMALL, Type.MUFFIN, "Coconut")
+
+def test_get_price_matches_calculate_price(sample_savoury):
+    assert sample_savoury.get_price() == sample_savoury.calculate_price()

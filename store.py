@@ -44,7 +44,20 @@ class Cafe:
         return new_order
 
     def get_order_history(self):
+        """
+        Returns a copy of the café's full order history.
+
+        :return: list[Order] – list of all orders placed in the café
+        """
         return list(self.__order_history)
+
+    def get_earnings(self):
+        """
+        Returns the most recently calculated total earnings.
+
+        :return: float – current earnings value
+        """
+        return round(self.__earnings, 2)
 
     def __str__(self):
         """

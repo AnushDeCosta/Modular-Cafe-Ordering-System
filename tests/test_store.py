@@ -19,3 +19,9 @@ def test_report_profit_empty_order():
     cafe = Cafe()
     cafe.create_order()
     assert cafe.report_profit() == 0.00
+
+def test_get_earnings_after_profit_report():
+    cafe = Cafe()
+    cafe.create_order()
+    cafe.report_profit()
+    assert cafe.get_earnings() == 0.00

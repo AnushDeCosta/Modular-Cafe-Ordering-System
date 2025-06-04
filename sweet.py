@@ -58,6 +58,15 @@ class Sweet(Food):
         """
         return self.__type
 
+    def get_price(self):
+        """
+        Returns the total calculated price of the food item.
+        This delegates to calculate_price() for consistency.
+
+        :return: float – final price of the item
+        """
+        return self.calculate_price()
+
     def __str__(self):
         """
         Returns a readable string describing the Sweet item, including type,
