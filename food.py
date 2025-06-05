@@ -55,3 +55,12 @@ class Food(Item):
         Must be implemented by subclasses (e.g., Savoury or Sweet).
         """
         pass
+
+    def __str__(self):
+        """
+        Return a string representation of the food item, including size, name, and total price.
+
+        :return: Formatted string like "Medium Muffin - $3.50"
+        """
+        return f"{self.get_size().value} {self.get_name()} - ${self.calculate_price():.2f}"
+

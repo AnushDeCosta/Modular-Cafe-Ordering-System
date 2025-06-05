@@ -65,3 +65,12 @@ class Drink(Item):
         Must be implemented by subclasses (e.g., Tea, Coffee, Other).
         """
         pass
+
+    def __str__(self):
+        """
+        Return a string representation of the drink item, including size, name, and total price.
+
+        :return: Formatted string like "Large Tea - $5.50"
+        """
+        return f"{self.get_size().value} {self.get_name()} - ${self.calculate_price():.2f}"
+
