@@ -399,3 +399,34 @@ These limitations made both the test suite and main script harder to maintain.
 - How consistency in method naming (e.g. `get_price()` vs `calculate_price()`) improves readability
 - Why safe inspection methods are critical for confirming system behaviour during integration
 
+# Issue #15: Final testing pass and validation of all components
+
+**Status:** Resolved  
+**File(s) Affected:** test_*.py, main.py, conftest.py, README.md  
+**Commit (Resolved):** Final project polish: full test suite and edge case validation (`e321cb5`)
+
+### Description
+
+This issue documents the final testing pass to confirm system-wide integrity after implementing all features, validations, and helper methods. The goal was to ensure:
+- All major and minor edge cases are handled
+- All testable methods are covered across food, drink, order, and store classes
+- Console output from `main.py` reflects realistic, readable café summaries
+
+### What Was Verified
+
+- 33 test cases passed via PyTest with no errors, warnings, or skips
+- All files follow COMP1048 standards for structure, naming, and headers
+- `__str__()` methods generate clear café-style messages
+- Getter methods (e.g. `has_soda()`, `get_sugar()`) support testing and summarisation
+- Enum validation and pricing logic work across all inputs
+- README.md reflects final system state and submission-ready instructions
+
+### Outcome
+
+The café system is now complete, robust, and aligned with both the UML and assessment brief. Code is readable, modular, and fully tested — ready for GitHub submission and assessment.
+
+### What I Learned
+
+- That high-quality OOP involves not just structure, but documentation and usability
+- How to interpret UML faithfully while improving clarity for users
+- That writing a clear, structured debugging log improves traceability and professionalism
