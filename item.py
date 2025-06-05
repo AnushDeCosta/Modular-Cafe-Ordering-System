@@ -56,3 +56,13 @@ class Item(ABC):
         """
         return self.__price
 
+    def __str__(self):
+        """
+        Returns a basic string representation of the item.
+        Subclasses are encouraged to override this for more specific output.
+
+        :return: str – basic item name and base price
+        """
+        return f"{self.__name} at base price - ${self.__price:.2f}"
+
+
