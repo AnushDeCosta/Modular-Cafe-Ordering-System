@@ -12,6 +12,7 @@ This assessment models a café environment that supports customisable drink and 
 - **Composition & Aggregation**: The `Cafe` class handles orders and manages internal state, delegating behaviour to items.
 - **Encapsulation**: Private attributes and setter/getter methods enforce data integrity.
 - **Test-Driven Development**: Pytest is used to validate core logic, edge cases, helper methods, and price calculations.
+- **UML Compliance**: All classes and methods implemented according to the provided UML diagram.
 
 > **Note:** The implementation adheres closely to the provided UML and programming standards.
 
@@ -21,7 +22,7 @@ This assessment models a café environment that supports customisable drink and 
 - **Item Pricing**: All price logic follows the assignment's guidelines, with multipliers based on attributes.
 - **Error Handling**: Input validation ensures users cannot create invalid or contradictory orders.
 - **Debugging Log**: All issues, resolutions, and test cases are documented in `debugginglog.md`.
-- **Helper Methods**: Added methods like `has_milk()`, `get_sugar()`, `get_total_price()`, and `get_earn_
+- **Helper Methods**: Added methods like `has_milk()`, `get_sugar()`, `get_total_price()`, and `get_earnings()` to support output formatting and testing.
 
 ## Core Mechanics
 - **Item**: Abstract class for all products, with enforced implementation of `get_price()` and `__str__()`.
@@ -34,6 +35,11 @@ This assessment models a café environment that supports customisable drink and 
 - **Console Messages**: Clear and descriptive outputs from `__str__()` methods.
 - **Pytest Output**: Structured test feedback with edge case coverage.
 - **Summary Reports**: Orders and revenue are presented in clean, readable summaries.
+
+## Testing
+- Full unit testing using `pytest`
+- 33 test cases, including edge cases (e.g. invalid enums, empty lists, boundary sugar values)
+- Fixtures defined in `conftest.py` for reuse and consistency
 
 ## Tools
 - **Language**: Python 3.13+  
