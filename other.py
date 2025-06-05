@@ -1,6 +1,7 @@
 """
 File: other.py
-Description: Other drink subclass with soda and flavour.
+Description: Defines the Other class for drinks like water, cola, or lemonade.
+             Includes soda and cold drink surcharges, and flavour-based price adjustments.
 Author: Anush Shirantha De Costa
 ID: 110454712
 Username: deyay064
@@ -10,11 +11,20 @@ This is my own work as defined by the University's Academic Misconduct Policy.
 from drink import Drink
 from enums import Flavour
 
+# --- Constants for pricing ---
+SODA_COST = 0.50
+COLD_DRINK_SURCHARGE = 1.00
+FLAVOUR_PRICE_ADJUSTMENTS = {
+    Flavour.WATER: -3.00,
+    Flavour.LEMONADE: 2.00,
+    Flavour.COLA: 2.00
+}
+
 
 class Other(Drink):
     """
     Represents any 'Other' drink sold in the café.
-    Inherits from the Drink class. and includes Soda boolean.
+    Inherits from the Drink class and includes a soda option and flavour-based pricing.
     """
 
     BASE_PRICE = 5.00
@@ -27,7 +37,7 @@ class Other(Drink):
         :param cold: Boolean – True if the drink is cold (iced), False if hot
         :param flavour: List containing exactly one Flavour enum
         :param soda: Boolean – True if soda is included (default is False)
-        :raises ValueError: if flavour is not a list of exactly one valid Flavour enum
+        :raises ValueError: for invalid flavour list or soda type
         """
         super().__init__("Other", 0.00, size, cold)
 
@@ -43,16 +53,10 @@ class Other(Drink):
 
         :return: Float – final price (clamped to 0 if negative)
         """
-        soda_price = 0.50 if self.__soda else 0.00
-        cold_price = 1.00 if self.is_cold() else 0.00
-        flavour_price = 0.00
+        soda_price = SODA_COST if self.__soda else 0.00
+        cold_price = COLD_DRINK_SURCHARGE if self.is_cold() else 0.00
         flavour = self.__flavour[0]
-        if flavour == Flavour.WATER:
-            flavour_price -= 3
-        elif flavour == Flavour.LEMONADE:
-            flavour_price += 2
-        elif flavour == Flavour.COLA:
-            flavour_price += 2
+        flavour_price = FLAVOUR_PRICE_ADJUSTMENTS.get(flavour, 0.00)
 
         price = (self.BASE_PRICE + soda_price + cold_price + flavour_price)
         return max(price, 0.00)
@@ -87,6 +91,6 @@ class Other(Drink):
         if self.__soda:
             extras.append("with soda")
         else:
-            extras.append("still")
+            extras.append("no soda")
 
         return f"{size_text} {temp_text} {flavour_text} ({', '.join(extras)}) at price - ${self.calculate_price():.2f}"

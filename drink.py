@@ -1,6 +1,7 @@
 """
 File: drink.py
-Description: Base class for drinks. Adds size, cold, and prepare().
+Description: Abstract base class for drinks sold in the café. Adds size and temperature attributes,
+             and defines a prepare() method for optional subclass override.
 Author: Anush Shirantha De Costa
 ID: 110454712
 Username: deyay064
@@ -52,8 +53,8 @@ class Drink(Item):
 
     def prepare(self):
         """
-        Basic preparation method for a drink.
-        Can be overridden by subclasses.
+        Prepares the drink by printing a basic message.
+        Subclasses may override this for custom preparation steps.
         """
         print(f"Preparing your {self.get_size().value} {self.get_name()}...")
 

@@ -10,12 +10,19 @@ This is my own work as defined by the University's Academic Misconduct Policy.
 from food import Food
 from enums import Type
 
+# --- Constants for pricing ---
+TYPE_MULTIPLIERS = {
+    Type.LOAF: 3,
+    Type.MUFFIN: 1,
+    Type.SLICE: 0.5
+}
+
 
 class Sweet(Food):
     """
-        Represents a sweet food item sold in the café.
-        Inherits from the Food class and includes only types.
-        """
+    Represents a sweet food item sold in the café.
+    Inherits from the Food class and includes only types.
+    """
     BASE_PRICE = 2.00
 
     def __init__(self, size, type):
@@ -24,6 +31,7 @@ class Sweet(Food):
 
         :param size: Size enum (SMALL / MEDIUM / LARGE)
         :param type: Type enum (LOAF / MUFFIN / SLICE)
+        :raises ValueError: for invalid enum value
         """
         super().__init__("Sweet", 0.00, size)
 
@@ -48,7 +56,7 @@ class Sweet(Food):
             type_multiplier = 1
 
         price = self.BASE_PRICE * type_multiplier
-        return round(price, 2)
+        return round(price, 2) # Rounds to 2 decimals to match café pricing format
 
     def get_type(self):
         """

@@ -1,6 +1,7 @@
 """
 File: coffee.py
-Description: Coffee subclass with extra shots and milk options.
+Description: Defines the Coffee class, a hot or iced drink made with a single bean type.
+             Supports optional milk and sugar, and includes logic for brewing and price calculation.
 Author: Anush Shirantha De Costa
 ID: 110454712
 Username: deyay064
@@ -9,6 +10,16 @@ This is my own work as defined by the University's Academic Misconduct Policy.
 
 from drink import Drink
 from enums import Bean
+
+# --- Constants for pricing ---
+MILK_COST = 0.75
+SUGAR_UNIT_COST = 0.25
+BEAN_PRICE_ADJUSTMENTS = {
+    Bean.ARABICA: -3.00,
+    Bean.ROBUSTA: 2.00,
+    Bean.LIBERICA: 2.00,
+    Bean.EXCELSA: 3.00
+}
 
 
 class Coffee(Drink):
@@ -29,6 +40,7 @@ class Coffee(Drink):
         :param sugar: number of sugar units (≥ 0)
         :param milk: add milk (default False)
         :param ready: already brewed? (default False)
+        :raises ValueError: for invalid bean list, milk type, sugar value, or readiness flag
         """
         super().__init__("Coffee", 0.00, size, cold)
 
@@ -51,6 +63,8 @@ class Coffee(Drink):
         Brew the coffee and mark it as ready.
         If already brewed, prints a message and does nothing.
         """
+        # Flavour validity was checked during init, assumed safe here
+
         if self.__ready:
             print("Coffee is already brewed!")
             return
@@ -64,21 +78,12 @@ class Coffee(Drink):
 
         :return: Float – final price (clamped to 0 if negative)
         """
-        milk_price = 0.75 if self.__milk else 0.00
-        sugar_price = 0.25 * self.__sugar
-
-        bean_price = 0.00
+        milk_price = MILK_COST if self.__milk else 0.00
+        sugar_price = SUGAR_UNIT_COST * self.__sugar
         bean = self.__beans[0]
-        if bean == Bean.ARABICA:
-            bean_price -= 3
-        elif bean == Bean.ROBUSTA:
-            bean_price += 2
-        elif bean == Bean.LIBERICA:
-            bean_price += 2
-        elif bean == Bean.EXCELSA:
-            bean_price += 3
+        bean_price = BEAN_PRICE_ADJUSTMENTS.get(bean, 0.00)
 
-        price = (self.BASE_PRICE + milk_price + sugar_price + bean_price)
+        price = self.BASE_PRICE + milk_price + sugar_price + bean_price
         return max(price, 0.00)
 
     def get_bean(self):
@@ -126,10 +131,7 @@ class Coffee(Drink):
         bean_text = self.__beans[0].value
         extras = [bean_text]
 
-        if self.__milk:
-            extras.append("milk")
-        else:
-            extras.append("no milk")
+        extras.append("milk" if self.__milk else "no milk")
 
         if self.__sugar > 0:
             sugar_text = f"{self.__sugar} sugar" if self.__sugar == 1 else f"{self.__sugar} sugars"

@@ -1,6 +1,7 @@
 """
 File: store.py
-Description: Cafe system tracking earnings and orders.
+Description: Defines the Cafe class, which manages customer orders,
+             tracks total earnings, and prints summaries of all transactions.
 Author: Anush Shirantha De Costa
 ID: 110454712
 Username: deyay064
@@ -17,27 +18,28 @@ class Cafe:
 
     def __init__(self):
         """
-        Initialise the café with no earnings and an empty order history.
+        Initialises the café with no earnings and an empty order history.
+        Orders are tracked for reporting, summaries, and testing purposes.
         """
         self.__earnings = 0.0
         self.__order_history = []
 
     def report_profit(self):
         """
-        Recalculates and returns the total earnings made by the café
-        based on recorded order history.
+        Recalculates and returns total earnings based on current order history.
+        This ensures up-to-date totals even if items are added/removed from existing orders.
 
-        :return: Float – total revenue from all placed orders
+        :return: total revenue from all orders
         """
         self.__earnings = sum(order.calculate_price() for order in self.__order_history)
-        return round(self.__earnings, 2)
+        return round(self.__earnings, 2) # Rounds to 2 decimals to match café pricing format
 
     def create_order(self):
         """
-        Creates a new order, adds it to the order history internally,
-        and returns it for use.
+        Creates a new blank order, stores it in the internal order history,
+        and returns the instance for further population and processing.
 
-        :return: Order – a new blank order object
+        :return: Order – newly created empty Order object
         """
         new_order = Order()
         self.__order_history.append(new_order)
@@ -57,7 +59,7 @@ class Cafe:
 
         :return: float – current earnings value
         """
-        return round(self.__earnings, 2)
+        return round(self.__earnings, 2) # Rounds to 2 decimals to match café pricing format
 
     def __str__(self):
         """

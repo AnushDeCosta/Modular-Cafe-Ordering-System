@@ -1,6 +1,7 @@
 """
 File: tea.py
-Description: Tea subclass with flavours, milk, sugar, and brew().
+Description: Defines the Tea class, a hot or iced drink that allows multiple flavours,
+             optional milk and sugar, and supports brewing.
 Author: Anush Shirantha De Costa
 ID: 110454712
 Username: deyay064
@@ -9,6 +10,17 @@ This is my own work as defined by the University's Academic Misconduct Policy.
 
 from drink import Drink
 from enums import TeaFlavour
+
+# --- Constants for pricing ---
+MILK_COST = 0.75
+SUGAR_UNIT_COST = 0.25
+FLAVOUR_PRICE_ADJUSTMENTS = {
+    TeaFlavour.CHAI: 1.00,
+    TeaFlavour.EARL_GREY: -3.00,
+    TeaFlavour.GREEN: 2.00,
+    TeaFlavour.CHAMOMILE: 2.00
+}
+
 
 class Tea(Drink):
     """
@@ -28,6 +40,7 @@ class Tea(Drink):
         :param sugar: number of sugar units (≥ 0)
         :param milk: add milk (default False)
         :param ready: already brewed? (default False)
+        :raises ValueError: for invalid flavour list, milk type, sugar value, or readiness flag
         """
         super().__init__("Tea", 0.00, size, cold)
 
@@ -51,6 +64,8 @@ class Tea(Drink):
         Brew the tea and mark it as ready.
         If already brewed, prints a message and does nothing.
         """
+        # Flavour validity was checked during init, assumed safe here
+
         if self.__ready:
             print("Tea is already brewed!")
             return
@@ -98,19 +113,10 @@ class Tea(Drink):
 
         :return: Float – final price (clamped to 0 if negative)
         """
-        milk_price = 0.75 if self.__milk else 0.00
-        sugar_price = 0.25 * self.__sugar
+        milk_price = MILK_COST if self.__milk else 0.00
+        sugar_price = SUGAR_UNIT_COST * self.__sugar
 
-        flavour_price = 0.00
-        for flavour in self.__flavours:
-            if flavour == TeaFlavour.CHAI:
-                flavour_price += 1
-            elif flavour == TeaFlavour.EARL_GREY:
-                flavour_price -= 3
-            elif flavour == TeaFlavour.GREEN:
-                flavour_price += 2
-            elif flavour == TeaFlavour.CHAMOMILE:
-                flavour_price += 2
+        flavour_price = sum(FLAVOUR_PRICE_ADJUSTMENTS.get(f, 0.00) for f in self.__flavours)
 
         price = (self.BASE_PRICE + milk_price + sugar_price + flavour_price)
         return max(price, 0.00)
@@ -127,7 +133,7 @@ class Tea(Drink):
         """
         Returns True if the tea has been brewed, False otherwise.
 
-        :return: Boolean
+        :return: bool – True if brewed, False otherwise
         """
         return self.__ready
 

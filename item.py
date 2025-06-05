@@ -1,6 +1,7 @@
 """
 File: item.py
-Description: Abstract class for all items. Defines name, price, and calculate_price().
+Description: Abstract base class for all café items.
+             Stores core item attributes (name and price) and enforces implementation of calculate_price().
 Author: Anush Shirantha De Costa
 ID: 110454712
 Username: deyay064
@@ -34,8 +35,8 @@ class Item(ABC):
     @abstractmethod
     def calculate_price(self):
         """
-        Abstract method to calculate the total price of the item.
-        Must be implemented by all subclasses.
+        Abstract method that forces subclasses to define their own price calculation logic.
+        This ensures consistent pricing behaviour across all item types.
         """
         pass
 

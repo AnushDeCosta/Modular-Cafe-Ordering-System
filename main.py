@@ -19,13 +19,17 @@ from store import Cafe
 
 
 def main():
-    print("\n==== Welcome to Campus Café System ====\n")
+    print("\n" + "="*40)
+    print("WELCOME TO CAMPUS CAFÉ SYSTEM")
+    print("="*40 + "\n")
 
     # Create a new store
     cafe = Cafe()
 
-    # === Create drinks ===
+    # === Drinks Section ===
+    print("-" * 25)
     print("Creating drinks...")
+    print("-" * 25)
 
     tea = Tea(
         size=Size.MEDIUM,
@@ -53,8 +57,10 @@ def main():
     )
     print(f"Other drink: {other}")
 
-    # === Create food items ===
-    print("\nCreating food items...")
+    # === Food Section ===
+    print("\n" + "-" * 25)
+    print("Creating food items...")
+    print("-" * 25)
 
     sweet = Sweet(
         size=Size.SMALL,
@@ -73,8 +79,10 @@ def main():
     sweet.order()
     savoury.order()
 
-    # === Create and use Order ===
-    print("\nCreating and populating an order...")
+    # === Order Section ===
+    print("\n" + "-" * 25)
+    print("Creating and populating an order...")
+    print("-" * 25)
     order = Order()
     order.add_item_to_order(tea)
     order.add_item_to_order(coffee)
@@ -83,30 +91,38 @@ def main():
     order.add_item_to_order(savoury)
 
     print("\nOrder details:")
-    print(order) # Uses __str__ output
-    print(f"Total (via get_total_price): ${order.get_total_price():.2f}")  # Validating method return
+    print(order)
+    print(f"Total (via get_total_price): ${order.get_total_price():.2f}")
 
     print("\nRemoving sweet item from the order...")
     order.remove_item_from_order(sweet)
     print("Updated order after removal:")
-    print(order) # Uses __str__ output
-    print(f"Total (via get_total_price): ${order.get_total_price():.2f}")  # Validating method return
+    print(order)
+    print(f"Total (via get_total_price): ${order.get_total_price():.2f}")
 
-    # Brew tea and coffee
-    print("\nBrewing drinks...")
+    # === Brewing Section ===
+    print("\n" + "-" * 25)
+    print("Brewing drinks...")
+    print("-" * 25)
     tea.brew()
     coffee.brew()
 
     print("\nUpdated order details after brewing:")
-    print(order) # Uses __str__ output
-    print(f"Total (via get_total_price): ${order.get_total_price():.2f}")  # Validating method return
+    print(order)
+    print(f"Total (via get_total_price): ${order.get_total_price():.2f}")
 
+    # === Getter Demonstration ===
+    print("\n" + "-" * 25)
+    print("Inspecting individual drink states...")
+    print("-" * 25)
     print(f"Coffee has milk? {coffee.has_milk()}")
     print(f"Tea sugar: {tea.get_sugar()}")
     print(f"Other includes soda? {other.has_soda()}")
 
-    # === Submit order to store ===
-    print("\nSubmitting order to the store...")
+    # === Store Reporting ===
+    print("\n" + "-" * 25)
+    print("Submitting order to the store...")
+    print("-" * 25)
     cafe_order = cafe.create_order()
     for item in order.get_items():
         cafe_order.add_item_to_order(item)
@@ -116,7 +132,9 @@ def main():
     print(f"Total earnings (read from state): ${cafe.get_earnings():.2f}")
     print(f"Number of orders: {len(cafe.get_order_history())}")
 
-    print("\n==== Test Complete ====")
+    print("\n" + "="*40)
+    print("TEST COMPLETE")
+    print("="*40)
 
 
 if __name__ == "__main__":

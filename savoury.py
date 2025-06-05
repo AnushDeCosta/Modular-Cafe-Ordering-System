@@ -10,6 +10,18 @@ This is my own work as defined by the University's Academic Misconduct Policy.
 from food import Food
 from enums import Flour, Type
 
+# --- Constants for pricing ---
+TYPE_MULTIPLIERS = {
+    Type.LOAF: 3,
+    Type.MUFFIN: 1,
+    Type.SLICE: 0.5
+}
+
+FLOUR_MULTIPLIERS = {
+    Flour.WHOLE: 2,
+    Flour.WHITE: 1
+}
+
 
 class Savoury(Food):
     """
@@ -25,6 +37,7 @@ class Savoury(Food):
         :param size: Size enum (SMALL / MEDIUM / LARGE)
         :param type: Type enum (LOAF / MUFFIN / SLICE)
         :param flour: Flour enum (WHOLE / WHITE / SLICE)
+        :raises ValueError: for invalid enum values
         """
         super().__init__("Savoury", 0.00, size)
 
@@ -38,28 +51,16 @@ class Savoury(Food):
 
     def calculate_price(self):
         """
-        Calculates the total price of the savoury food item based on type and flour.
+        Calculates the total price of the savoury item by multiplying a base price
+        with both type and flour multipliers.
 
-        :return: Float – final price
+        :return: float – rounded final price
         """
-        if self.__type == Type.LOAF:
-            type_multiplier = 3
-        elif self.__type == Type.MUFFIN:
-            type_multiplier = 1
-        elif self.__type == Type.SLICE:
-            type_multiplier = 0.5
-        else:
-            type_multiplier = 1
-
-        if self.__flour == Flour.WHOLE:
-            flour_multiplier = 2
-        elif self.__flour == Flour.WHITE:
-            flour_multiplier = 1
-        else:
-            flour_multiplier = 1
+        type_multiplier = TYPE_MULTIPLIERS.get(self.__type, 1)
+        flour_multiplier = FLOUR_MULTIPLIERS.get(self.__flour, 1)
 
         price = self.BASE_PRICE * type_multiplier * flour_multiplier
-        return round(price, 2)
+        return round(price, 2) # Rounds to 2 decimals to match café pricing format
 
     def get_type(self):
         """

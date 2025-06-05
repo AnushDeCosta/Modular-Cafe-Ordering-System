@@ -1,6 +1,7 @@
 """
 File: food.py
-Description: Base class for food. Adds size and order().
+Description: Abstract base class for café food items. Stores size attribute and defines a generic order() method.
+             Requires subclasses to implement calculate_price().
 Author: Anush Shirantha De Costa
 ID: 110454712
 Username: deyay064
@@ -25,8 +26,8 @@ class Food(Item):
         :param name: Name of the food (inherited from Item)
         :param price: Base price of the food
         :param size: A value from the Size enum
+        :raises ValueError: for invalid enum values
         """
-
         super().__init__(name, price)
 
         if not isinstance(size, Size):

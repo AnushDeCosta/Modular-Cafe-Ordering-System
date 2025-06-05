@@ -1,6 +1,7 @@
 """
 File: order.py
-Description: Represents an order with item list and price methods.
+Description: Defines the Order class used to manage a customer’s item list,
+             including item tracking, total price calculation, and string summaries.
 Author: Anush Shirantha De Costa
 ID: 110454712
 Username: deyay064
@@ -23,14 +24,14 @@ class Order:
         which will be updated as items are added or removed.
         """
         self.__items = []
-        self.__cost = 0.0
+        self.__cost = 0.00
 
     def add_item_to_order(self, item):
         """
         Adds a menu item to the order and updates the running cost.
 
-        :param item: An instance of Item (or subclass such as Tea, Coffee, Sweet, etc.)
-        :raises ValueError: if the object is not an Item subclass
+        :param item: An instance of Item or its subclass (e.g. Tea, Coffee, Sweet)
+        :raises ValueError: if item is not a valid menu object
         """
         if not isinstance(item, Item):
             raise ValueError("Only Item subclasses can be added to an order.")
@@ -58,12 +59,12 @@ class Order:
         This reflects the sum of all item prices currently in the order.
         :return: Float – total order price
         """
-        return round(self.__cost, 2)
+        return round(self.__cost, 2) # Rounds to 2 decimals to match café pricing format
 
     def get_items(self):
         """
         Returns a copy of the items in the order for external inspection or testing.
-        :return: list[Item]
+        :return: list[Item] – a shallow copy of the current item list
         """
         return list(self.__items)
 
