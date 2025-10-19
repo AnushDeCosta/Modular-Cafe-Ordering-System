@@ -1,0 +1,432 @@
+> **Acknowledgement**: This debugging journal’s structure was inspired by a format shared by Alexandra Berdashkevich, with permission from the teaching team.
+
+# Issue #1: Creating scaffold for all classes based on UML
+
+**Status: Resolved**
+
+**File(s) Affected:** item.py, drink.py, tea.py, coffee.py, other.py, food.py, savoury.py, sweet.py, order.py, store.py, enums.py, test_items.py  
+**Commit (Noticed):** _N/A – Initial setup phase_  
+**Commit (Resolved):** Update #1 - Created class file structure based on UML (`c20d1a1`)
+
+### Error code and Description
+
+There wasn’t an actual error thrown, but this step was essential to prevent future confusion. The entire café system’s class structure needed to reflect the UML and assessment brief from the beginning. This included ensuring:
+- File naming matched class roles
+- Relationships (like inheritance) were scaffolded correctly
+- `Cafe` (not in UML) was added to `store.py` as per brief and forum guidance
+
+Expected:
+- One `.py` file per class and enum shown in the UML
+- COMP1048-compliant headers in all files
+- Classes defined with correct names and placeholder bodies
+- Structure ready for testing, logic, and Pytest setup
+
+Actual (if not fixed):
+- Without this structure, logic could end up misplaced
+- Missing files or inconsistent naming would make the system harder to scale or test later
+- UML deviations (like Cafe) would go undocumented
+
+### Resolution Log
+
+- Created 12 total `.py` files based on UML and brief:
+  - Abstract/base classes: `item.py`, `drink.py`, `food.py`
+  - Subclasses: `tea.py`, `coffee.py`, `other.py`, `savoury.py`, `sweet.py`
+  - Management: `order.py`, `store.py`
+  - Supporting enums: `enums.py`
+  - Test starter: `test_items.py`
+- Inserted COMP1048-standard headers into each file
+- Declared class names and parent relationships (e.g. `Drink(Item)`)
+- Used `pass` or placeholder methods where needed
+- Added `Cafe` to `store.py` to handle order history and total earnings (brief requirement)
+- Confirmed structure with clean commit: `c20d1a1`
+
+# Issue #2: Implemented Item constructor with validation
+
+**Status:** Resolved  
+**File(s) Affected:** item.py  
+**Commit (Noticed):** Update #1 - Created class file structure based on UML (`c20d1a1`)  
+**Commit (Resolved):** Update #2 - Implemented Item class logic (`c29bcb1`)
+
+### Error code and Description
+
+No error occurred during testing, but I identified a potential risk: future bugs could arise if item names or prices were invalid. 
+Since all menu items inherit from Item, I decided to add validation up front in the constructor.
+
+Expected:
+- Name should be a non-empty string
+- Price should be a non-negative float
+
+Actual (if not fixed):
+- Code could crash later or show incorrect prices if invalid data slipped through
+
+### Resolution Log
+
+- Added `__init__()` to `Item` with checks for valid name and price
+- Raised `ValueError` on invalid inputs
+- Added getter methods for `__name` and `__price`
+- Confirmed class builds successfully and will enforce checks for all subclasses
+
+# Issue #3: Implemented Drink class with validation and base preparation logic
+
+**Status:** Resolved
+
+**File(s) Affected:** drink.py  
+**Commit (Noticed):** Update #2 - Implemented Item class logic (`c29bcb1`)
+**Commit (Resolved):** Update #3 - Updated drink.py (`9c93fc9`)
+
+### Error code and Description
+
+There was no specific error during implementation, but I needed to ensure that `Drink` correctly handled two key attributes: `size` and `cold`. 
+These are unique to drinks and required validation based on the UML and course requirements.
+
+Expected:
+- Ensure only valid `Size` enum values are accepted
+- Prevent invalid `cold` inputs (like strings or integers)
+- Make sure the `prepare()` method gives a clear, override-friendly message
+
+Actual (if not handled):
+- Invalid enum or boolean values could slip in and cause subtle bugs in subclasses
+- `prepare()` wouldn’t produce helpful output or be easily overridden
+
+### Resolution Log
+
+- Created the `Drink` class inheriting from `Item`
+- Added `__size` and `__cold` with validation in `__init__()`
+- Used `isinstance()` to enforce clean enum and bool types
+- Implemented `prepare()` with dynamic size and name formatting
+- Added getters `get_size()` and `is_cold()` to support subclass logic
+
+# Issue #4: Implemented Tea class with full logic and pricing
+
+**Status:** Resolved
+
+**File(s) Affected:** tea.py, drink.py, item.py  
+**Commit (Noticed):** N/A – New class implementation  
+**Commit (Resolved):** Update #4 - Updated tea.py, item.py and drink.py (`7e40952`)
+
+### Error code and Description
+
+No specific error occurred, but the implementation involved interpreting a number of design decisions from the UML. In particular:
+- The UML listed `flavours: teaFlavour[]`, which in real life wouldn't make sense to allow multiple, but had to be implemented as a list to follow the diagram.
+- Care was needed to validate inputs (milk, sugar, ready, flavours) without breaking constructor logic.
+- Price calculation involved both additive and subtractive adjustments and had to be clamped to $0.
+
+Expected:
+- Tea class should correctly inherit from Drink and match the UML attributes and methods
+- All pricing logic for flavours (including Earl Grey's -$3) handled safely
+- Methods like `brew()`, `add_flavour()` and `remove_flavour()` should handle edge cases (e.g., duplicates)
+
+Actual (if not fixed):
+- Multiple flavours could break display logic or cause pricing errors
+- Users could add duplicates or remove non-existent flavours
+- Price could drop below 0 without clamping
+
+### Resolution Log
+
+- Implemented `__init__()` with full validation for all attributes
+- Wrote `brew()` method with size, temperature and joined flavour output
+- Added `add_flavour()` and `remove_flavour()` with enum type checks and duplication handling
+- Implemented `calculate_price()` with per-flavour adjustments and clamping at $0.00
+- Created getters `get_flavours()` and `is_ready()` for private attribute access
+- All docstrings were rewritten to match COMP1048 standards
+
+### What I Learned
+
+- How to work with enums in a list, and extract their `.value` strings for printing
+- That UML design overrides real-world intuition in assignments
+- How to structure price logic with edge case protections
+- The importance of defensive programming and clean error messages
+
+# Issue #5: Finalised Tea class with __str__, price logic, and full validation
+
+**Status:** Resolved  
+**File(s) Affected:** tea.py 
+**Commit (Noticed):** Update #4 - Updated tea.py, item.py and drink.py (`7e40952`)
+**Commit (Resolved):** Update #5 – Finalised tea.py (`858ae3b`)
+
+### Problem
+
+The Tea class needed a complete implementation:
+- The UML required handling of multiple flavours, milk, sugar, and readiness.
+- Printing was embedded across methods; needed to switch to __str__ for clean output.
+- Pricing logic had to include both additive and negative values (e.g., Earl Grey -$3).
+- Missing return in calculate_price() and improper constants usage (hardcoded `2`).
+
+### Fix Summary
+
+- Added class constant `BASE_PRICE = 2` for clarity and reusability
+- Updated `calculate_price()` to include all pricing rules and use `max(..., 0.0)`
+- Rewrote `__str__()` to return dynamic, realistic café-style descriptions
+- Used `self` in `brew()` print output for consistency and clarity
+- Kept user-relevant print statements for add/remove flavour methods
+- Confirmed that `get_flavours()` and `is_ready()` work as expected for testing
+
+### What I Learned
+
+- How to use `__str__` to replace print-based outputs for cleaner testing
+- The importance of clamping price and checking enums in lists
+- That docstring consistency across methods improves readability and compliance
+
+# Issue #6: Implemented Coffee class with bean validation, pricing, and __str__ output
+
+**Status:** Resolved  
+**File(s) Affected:** coffee.py  
+**Commit (Noticed):** N/A – New class implementation 
+**Commit (Resolved):** Update #6 – Updated coffee.py (`a25c292`)
+
+### Description and Rationale
+
+- Implemented `Coffee` class as a subclass of `Drink`, with attributes: `beans`, `milk`, `sugar`, and `ready`.
+- Although the UML specifies `beans: bean[]`, no `add_bean()` or `remove_bean()` methods were included — unlike `Tea`, which allows customisation.
+- Decided to enforce selection of **exactly one bean** during initialisation, as this:
+  1. Keeps the coffee creation model simple and realistic (cafés typically use a single roast/blend per cup)
+  2. Avoids unnecessary complexity around balancing multiple beans types (in reality).
+- Used a list structure to comply with the UML, but validated it contains only one `Bean` enum.
+- Implemented `brew()` to reflect preparation state and notify if already brewed.
+- Used `calculate_price()` to apply per-bean price modifiers and clamp the final result to $0 minimum.
+- Overrode `__str__()` to provide clear description output with size, temperature, bean, milk, and sugar.
+- Added a `get_bean()` method to expose the bean for use in other classes (e.g. order summary or testing).
+
+### What I Learned
+
+- That UML design allows for interpretation based on structure and context — especially when dynamic methods are missing
+- How to balance real-world customer logic (one bean per coffee) with assignment requirements (bean[])
+- How to validate list content and structure clearly with defensive programming
+- Reusing logic patterns across subclasses while tailoring design for specific item behaviour (e.g. Coffee ≠ Tea)
+
+# Issue #7: Implemented Other class with soda, flavour, and cold modifiers
+
+**Status:** Resolved  
+**File(s) Affected:** other.py, tea.py, coffee.py  
+**Commit (Noticed):** N/A – New class implementation  
+**Commit (Resolved):** Update #7 – Implemented other.py and updated tea.py, coffee.py (`3b71670`)
+
+### Description and Rationale
+
+- Created the `Other` class based on UML and brief, representing fizzy/cold drinks like Water, Cola, and Lemonade.
+- Added constructor validation to ensure the flavour is a list containing exactly one `Flavour` enum.
+- Implemented `calculate_price()` using:
+  - `BASE_PRICE = $5.00`
+  - `+0.50` if soda is True
+  - `+1.00` if cold
+  - flavour modifiers: Water `-3`, Cola/Lemonade `+2`
+- Used `max(price, 0.00)` to avoid negative prices.
+- Overrode `__str__()` to match café-style output: `Medium iced Cola (with soda) at price - $8.50`
+- Updated `__str__()` in `tea.py` and `coffee.py` to include the formatted price for consistency.
+
+### What I Learned
+
+- How to reuse design patterns from existing subclasses while adapting to new logic (e.g. Other ≠ Tea/Coffee)
+- The importance of consistent user output across multiple classes
+- The usefulness of testing flavour and soda combinations to confirm dynamic pricing
+- Why test logic should be separated from implementation files to avoid duplicate output
+
+# Issue #8: Implemented Food base class with size and order logic
+
+**Status:** Resolved  
+**File(s) Affected:** food.py  
+**Commit (Noticed):** N/A – New class implementation  
+**Commit (Resolved):** Update #9 – Implemented base Food class in food.py (`b954b06`)
+
+### Description and Rationale
+
+- Created `Food` as an abstract base class inheriting from `Item`, based on the UML design.
+- Added a private `__size` attribute, validated against the `Size` enum.
+- Implemented `get_size()` getter for use in subclasses (`Savoury`, `Sweet`).
+- Defined `order()` method to be overridden in child classes, but provided default user-friendly output for testing.
+- Declared `calculate_price()` as an `@abstractmethod`, ensuring that all subclasses implement their own pricing logic.
+
+### What I Learned
+
+- The role of base classes in simplifying shared logic across subclasses
+- Why abstract methods are useful for enforcing consistent subclass responsibilities
+- That even minimal classes should validate early (e.g. checking enum types)
+
+# Issue #9: Implemented Savoury class with type/flour pricing logic
+
+**Status:** Resolved  
+**File(s) Affected:** savoury.py  
+**Commit (Noticed):** N/A – New class implementation  
+**Commit (Resolved):** Update #10 – Implemented Savoury class in savoury.py (`5a7632f`)
+
+### Description and Rationale
+
+- Implemented the `Savoury` subclass of `Food`, with `Type` and `Flour` enums as per UML.
+- Validated that both inputs were single enum values and stored them as private attributes.
+- Used `if/elif` logic in `calculate_price()` to apply multipliers:
+  - Type: Loaf ×3, Muffin ×1, Slice ×0.5
+  - Flour: Whole ×2, White ×1
+- Ensured final price is calculated as `BASE_PRICE × type × flour`, with `round()` for currency precision.
+- Added `__str__()` for realistic output like `"Savoury Small Loaf made with Whole flour at price - $12.00"`.
+
+### What I Learned
+
+- That enforcing enum validation early prevents bugs in price logic
+- How to apply nested pricing models (multiplicative instead of additive)
+- How to make output both machine-readable and user-friendly using `__str__`
+- Importance of separating business logic (price) from display logic
+
+# Issue #10: Implemented Sweet class with type-based pricing logic
+
+**Status:** Resolved  
+**File(s) Affected:** sweet.py  
+**Commit (Noticed):** N/A – New class implementation  
+**Commit (Resolved):** Update #11 – Implemented Sweet class in sweet.py (`c9b75fc`)
+
+### Description and Rationale
+
+- Created the `Sweet` class inheriting from `Food`, as outlined in the UML.
+- Validated input for `Type` enum and rejected non-enum values.
+- Used a type multiplier to calculate final price based on:
+  - Loaf ×3
+  - Muffin ×1
+  - Slice ×0.5
+- Used `round(price, 2)` to ensure pricing is formatted for currency.
+- Implemented `__str__()` to return descriptive output for orders/receipts.
+- All functionality confirmed via tests in `test_items.py`.
+
+### What I Learned
+
+- How to simplify subclass logic by leveraging reusable base classes
+- Why input validation at the constructor stage prevents bugs later
+- How to apply and format dynamic pricing cleanly for food categories
+- Importance of separating test logic from class files for clarity
+
+# Issue #11: Implemented Order class with item management and cost tracking
+
+**Status:** Resolved  
+**File(s) Affected:** order.py  
+**Commit (Noticed):** N/A – New class implementation  
+**Commit (Resolved):** Update #12 – Updated order.py (`ea5f816`)
+
+### Description and Rationale
+
+- Implemented the `Order` class to manage customer purchases, based on the UML.
+- Created private attributes `__items` (list) and `__cost` (float) to store state as items are added and removed.
+- Used `add_item_to_order()` and `remove_item_from_order()` methods to manage contents and cost in real time.
+- Implemented `calculate_price()` to return the current `__cost` without recalculating from scratch.
+- Added `get_items()` to support test visibility without exposing internal state directly.
+- Implemented `__str__()` for friendly receipt-style output, supporting `main.py` and `test_items.py`.
+
+### What I Learned
+
+- The importance of syncing UML fields (like `- cost`) even if they're derivable
+- How to avoid recalculating order totals by updating cost incrementally
+- Why `__str__()` improves both debugging and test output in OOP systems
+- The value of exposing internal state via `get_` methods while preserving encapsulation
+
+# Issue #12: Implemented Cafe class to manage orders and earnings
+
+**Status:** Resolved  
+**File(s) Affected:** store.py  
+**Commit (Noticed):** N/A – New class implementation  
+**Commit (Resolved):** Update #13 – Implemented Cafe class in store.py (`6c48711`)
+
+### Description and Rationale
+
+- Implemented the `Cafe` class based on the UML and functional requirements from the brief.
+- Added private attributes `__earnings` (float) and `__order_history` (list of Orders).
+- `create_order()` both instantiates and records each new order in the history list, ensuring the brief’s requirement is met without violating UML restrictions.
+- `report_profit()` recalculates total earnings dynamically by summing the price of all recorded orders.
+- Implemented `__str__()` to generate a readable café summary, showing all orders and the current profit.
+- Included a safe getter `get_order_history()` for test access.
+### What I Learned
+
+- How to balance UML compliance with assignment brief requirements by using controlled internal logic
+- Why `create_order()` is the best place to record orders without introducing unauthorised methods
+- The usefulness of `__str__()` for summarising multi-object systems like a café with many orders
+- How to avoid side-effect bugs by recalculating profit from history instead of storing duplicate state
+
+# Issue #13: Added get_ready() to Coffee class for UML-compliant testing
+
+**Status:** Resolved  
+**File(s) Affected:** coffee.py, test_coffee.py  
+**Commit (Noticed):** Added tests folder with complete PyTest suite and updated coffee.py (`4c9f42a`)  
+**Commit (Resolved):** Same as above
+
+### Problem
+
+The test `test_brew_state()` in `test_coffee.py` was failing due to the absence of a method to check brew readiness. Unlike `Tea`, the `Coffee` class did not implement `is_ready()`, and this method was not listed in the UML.
+
+### Analysis
+
+Directly adding `is_ready()` would violate UML constraints, so I used getter methods for accessing private attributes. The brew readiness state (`__ready`) needed to be testable without modifying the UML structure.
+
+### Resolution Log
+
+- Added a getter method `get_ready()` to the Coffee class with a full docstring
+- This method returns the boolean value of `__ready` for use in tests and future expansion
+- Updated `test_coffee.py` to replace `is_ready()` with `get_ready()`
+- Re-ran the full test suite and confirmed 17/17 tests passed
+- Maintained UML compliance and rubric alignment
+
+### What I Learned
+
+- That getters can be safely added to support testability without violating UML
+- The importance of consistent access patterns across subclasses (Tea vs. Coffee)
+- How to handle missing method conflicts between design constraints and testing requirements
+
+# Issue #14: Added helper methods for inspection and testing support
+
+**Status:** Resolved  
+**File(s) Affected:** order.py, store.py, tea.py, coffee.py, other.py, sweet.py, savoury.py, main.py, test_*.py  
+**Commit (Noticed):** N/A – Design friction during testing and printing  
+**Commit (Resolved):** Update #14 – Added helper methods for inspection and testing across item classes (`41c4677`)
+
+### Problem
+
+While implementing `main.py` and PyTest coverage, it became clear that some internal attributes were difficult to inspect or verify cleanly. Specifically:
+- Attributes like `__milk`, `__sugar`, `__soda` were private
+- Prices could only be accessed via `calculate_price()`, causing inconsistent method usage
+- Café earnings required calling `report_profit()` repeatedly
+These limitations made both the test suite and main script harder to maintain.
+
+### Resolution Log
+
+- Added read-only getter methods to safely expose key private values for testing and summaries
+  - `has_milk()` and `get_sugar()` in `tea.py` and `coffee.py`
+  - `has_soda()` in `other.py`
+  - `get_price()` in `sweet.py` and `savoury.py`
+  - `get_total_price()` in `order.py` (alias of `calculate_price()`)
+  - `get_earnings()` in `store.py`
+- Updated `main.py` to print values using the new helper methods for clarity
+- Added 7 new test cases across the `test_*.py` files to validate each helper method
+- All 24 tests passed after integration
+
+### What I Learned
+
+- That getters can greatly improve testability without violating encapsulation or UML rules
+- How consistency in method naming (e.g. `get_price()` vs `calculate_price()`) improves readability
+- Why safe inspection methods are critical for confirming system behaviour during integration
+
+# Issue #15: Final testing pass and validation of all components
+
+**Status:** Resolved  
+**File(s) Affected:** test_*.py, main.py, conftest.py, README.md  
+**Commit (Resolved):** Final project polish: full test suite and edge case validation (`e321cb5`)
+
+### Description
+
+This issue documents the final testing pass to confirm system-wide integrity after implementing all features, validations, and helper methods. The goal was to ensure:
+- All major and minor edge cases are handled
+- All testable methods are covered across food, drink, order, and store classes
+- Console output from `main.py` reflects realistic, readable café summaries
+
+### What Was Verified
+
+- 33 test cases passed via PyTest with no errors, warnings, or skips
+- All files follow COMP1048 standards for structure, naming, and headers
+- `__str__()` methods generate clear café-style messages
+- Getter methods (e.g. `has_soda()`, `get_sugar()`) support testing and summarisation
+- Enum validation and pricing logic work across all inputs
+- README.md reflects final system state and submission-ready instructions
+
+### Outcome
+
+The café system is now complete, robust, and aligned with both the UML and assessment brief. Code is readable, modular, and fully tested — ready for GitHub submission and assessment.
+
+### What I Learned
+
+- That high-quality OOP involves not just structure, but documentation and usability
+- How to interpret UML faithfully while improving clarity for users
+- That writing a clear, structured debugging log improves traceability and professionalism
